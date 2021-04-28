@@ -40,7 +40,7 @@ const catalog = [
   },
 ];
 
-function renderProducts(products) {
+function renderProducts(products, rangePrice) {
   ul.innerHTML = products
     .map(
       product => `
@@ -52,9 +52,9 @@ function renderProducts(products) {
     .join('');
 }
 
-renderProducts(catalog);
+sliderInp.addEventListener('input', event => {
+  renderProducts(catalog, event.target.value);
+});
 
-sliderInp.addEventListener('input', event => {});
-
-//* TODO *Call the function into the event listener(?)*/
-//* TODO *Find a way to get the input*/
+//* TODO *Find a way to get the value of the range input and make*/
+//* an if statement that verifies if the event.target.value is < or > to the price *//
