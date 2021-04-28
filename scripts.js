@@ -40,20 +40,22 @@ const catalog = [
   },
 ];
 
-function renderProducts(products, rangePrice) {
+function renderProducts(products) {
   ul.innerHTML = products
     .map(
       product => `
-  <li>
-    <h6 id="${product.name}">${product.name} ${product.price}</h6>
-  </li>
+  <li id="${product.name}">${product.name} ${product.price} </li>
   `,
     )
     .join('');
 }
 
 sliderInp.addEventListener('input', event => {
-  renderProducts(catalog, event.target.value);
+  const maxPrice = event.target.value;
+
+  const newC = catalog.filter(product => maxPrice <= product.price.slice(1, 7));
+
+  renderProducts(newC);
 });
 
 //* TODO *Find a way to get the value of the range input and make*/
