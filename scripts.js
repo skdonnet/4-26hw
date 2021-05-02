@@ -1,6 +1,3 @@
-const ul = document.body.appendChild(document.createElement('ul'));
-const sliderInp = document.querySelector('#slider');
-
 const catalog = [
   {
     category: 'Sporting Goods',
@@ -32,31 +29,52 @@ const catalog = [
     stocked: false,
     name: 'iPhone 5',
   },
-  {
-    category: 'Electronics',
-    price: '$199.99',
-    stocked: true,
-    name: 'Nexus 7',
-  },
+  { category: 'Electronics', price: '$199.99', stocked: true, name: 'Nexus 7' },
 ];
 
-function renderProducts(products) {
-  ul.innerHTML = products
-    .map(
-      product => `
-  <li id="${product.name}">${product.name} ${product.price} </li>
-  `,
-    )
+const ul = document.createElement('ul');
+
+/**
+ * Render based on the value of `maxPrice`
+ * @param {number} maxPrice
+ */
+
+function render(filtered) {
+  ul.innerHTML = filtered
+    .map(({ name, price }) => `<li>${name} - ${price}</li>`)
     .join('');
 }
 
-sliderInp.addEventListener('input', event => {
-  const maxPrice = event.target.value;
+function filterByMaxPrice(products, max) {
+  const filteredPriceCatalog = max
+    ? catalog.filter(({ price }) => price.slice(1) < max)
+    : catalog;
+  render(filteredPriceCatalog);
+}
 
-  const newC = catalog.filter(product => maxPrice <= product.price.slice(1, 7));
+function filterBySearch() {}
 
-  renderProducts(newC);
-});
+document.body.appendChild(ul);
+render(catalog);
 
-//* TODO *Find a way to get the value of the range input and make*/
-//* an if statement that verifies if the event.target.value is < or > to the price *//
+document
+  .querySelector('input')
+  .addEventListener('input', ({ target: { value } }) => {
+    render(Number(value));
+  });
+
+document
+  .querySelector('#chckbx')
+  .addEventListener('change', ({ target: { checked } }) => {
+    let filteredStockCatalog = catalog.filter(
+      product => product.stocked === true,
+    );
+
+    if (checked === false) {
+      filteredStockCatalog = catalog;
+    }
+
+    render(filteredStockCatalog);
+  });
+
+document.querySelector('');
