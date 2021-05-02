@@ -52,8 +52,6 @@ function filterByMaxPrice(products, max) {
   render(filteredPriceCatalog);
 }
 
-function filterBySearch() {}
-
 document.body.appendChild(ul);
 render(catalog);
 
@@ -77,4 +75,12 @@ document
     render(filteredStockCatalog);
   });
 
-document.querySelector('');
+document.querySelector('#byName').addEventListener('keyup', event => {
+  const filteredCatalogByName = catalog.filter(product =>
+    product.name.toLowerCase().includes(event.target.value),
+  );
+
+  console.log(event.target.value);
+
+  render(filteredCatalogByName);
+});
